@@ -25,7 +25,7 @@ library BSwapV2Library {
             ))));
         */
         bytes32 salt = keccak256(abi.encodePacked(token0, token1));
-        address implementation = 0x2a772B16B837328bB10E5C0Ca326EB46C62D5671;    // pair implementation code contract
+        address implementation = 0x9b707E2a6A917B1b26de80bf17B33Cc88e6CB1db;    // pair implementation code contract
         assembly {
             let ptr := mload(0x40)
             mstore(ptr, 0x3d602d80600a3d3981f3363d3d373d3d3d363d73000000000000000000000000)
