@@ -4,16 +4,16 @@ import { deployContract } from 'ethereum-waffle'
 
 import { expandTo18Decimals } from './utilities'
 
-import BSwapV2Factory from '@uniswap/v2-core/build/BSwapV2Factory.json'
-import IBSwapV2Pair from '@uniswap/v2-core/build/IBSwapV2Pair.json'
+import DynamicFactory from '@uniswap/v2-core/build/DynamicFactory.json'
+import IDynamicPair from '@uniswap/v2-core/build/IDynamicPair.json'
 
 import ERC20 from '../../build/ERC20.json'
 import WETH9 from '../../build/WETH9.json'
-import BSwapV1Exchange from '../../build/BSwapV1Exchange.json'
-import BSwapV1Factory from '../../build/BSwapV1Factory.json'
-import BSwapV2Router01 from '../../build/BSwapV2Router01.json'
-import BSwapV2Migrator from '../../build/BSwapV2Migrator.json'
-import BSwapV2Router02 from '../../build/BSwapV2Router02.json'
+import DynamicV1Exchange from '../../build/DynamicV1Exchange.json'
+import DynamicV1Factory from '../../build/DynamicV1Factory.json'
+import DynamicRouter01 from '../../build/DynamicRouter01.json'
+import DynamicMigrator from '../../build/DynamicMigrator.json'
+import DynamicRouter02 from '../../build/DynamicRouter02.json'
 import RouterEventEmitter from '../../build/RouterEventEmitter.json'
 
 const overrides = {
@@ -45,33 +45,33 @@ export async function v2Fixture(provider: Web3Provider, [wallet]: Wallet[]): Pro
   const WETHPartner = await deployContract(wallet, ERC20, [expandTo18Decimals(10000)])
 
   // deploy V1
-  const factoryV1 = await deployContract(wallet, BSwapV1Factory, [])
-  await factoryV1.initializeFactory((await deployContract(wallet, BSwapV1Exchange, [])).address)
+  const factoryV1 = await deployContract(wallet, DynamicV1Factory, [])
+  await factoryV1.initializeFactory((await deployContract(wallet, DynamicV1Exchange, [])).address)
 
   // deploy V2
-  const factoryV2 = await deployContract(wallet, BSwapV2Factory, [wallet.address])
+  const factoryV2 = await deployContract(wallet, DynamicFactory, [wallet.address])
 
   // deploy routers
-  const router01 = await deployContract(wallet, BSwapV2Router01, [factoryV2.address, WETH.address], overrides)
-  const router02 = await deployContract(wallet, BSwapV2Router02, [factoryV2.address, WETH.address], overrides)
+  const router01 = await deployContract(wallet, DynamicRouter01, [factoryV2.address, WETH.address], overrides)
+  const router02 = await deployContract(wallet, DynamicRouter02, [factoryV2.address, WETH.address], overrides)
 
   // event emitter for testing
   const routerEventEmitter = await deployContract(wallet, RouterEventEmitter, [])
 
   // deploy migrator
-  const migrator = await deployContract(wallet, BSwapV2Migrator, [factoryV1.address, router01.address], overrides)
+  const migrator = await deployContract(wallet, DynamicMigrator, [factoryV1.address, router01.address], overrides)
 
   // initialize V1
   await factoryV1.createExchange(WETHPartner.address, overrides)
   const WETHExchangeV1Address = await factoryV1.getExchange(WETHPartner.address)
-  const WETHExchangeV1 = new Contract(WETHExchangeV1Address, JSON.stringify(BSwapV1Exchange.abi), provider).connect(
+  const WETHExchangeV1 = new Contract(WETHExchangeV1Address, JSON.stringify(DynamicV1Exchange.abi), provider).connect(
     wallet
   )
 
   // initialize V2
   await factoryV2.createPair(tokenA.address, tokenB.address)
   const pairAddress = await factoryV2.getPair(tokenA.address, tokenB.address)
-  const pair = new Contract(pairAddress, JSON.stringify(IBSwapV2Pair.abi), provider).connect(wallet)
+  const pair = new Contract(pairAddress, JSON.stringify(IDynamicPair.abi), provider).connect(wallet)
 
   const token0Address = await pair.token0()
   const token0 = tokenA.address === token0Address ? tokenA : tokenB
@@ -79,7 +79,7 @@ export async function v2Fixture(provider: Web3Provider, [wallet]: Wallet[]): Pro
 
   await factoryV2.createPair(WETH.address, WETHPartner.address)
   const WETHPairAddress = await factoryV2.getPair(WETH.address, WETHPartner.address)
-  const WETHPair = new Contract(WETHPairAddress, JSON.stringify(IBSwapV2Pair.abi), provider).connect(wallet)
+  const WETHPair = new Contract(WETHPairAddress, JSON.stringify(IDynamicPair.abi), provider).connect(wallet)
 
   return {
     token0,

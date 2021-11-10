@@ -1,19 +1,19 @@
 pragma solidity =0.6.6;
 
 import './libraries/TransferHelper.sol';
-import './interfaces/IBSwapV2Migrator.sol';
-import './interfaces/V1/IBSwapV1Factory.sol';
-import './interfaces/V1/IBSwapV1Exchange.sol';
-import './interfaces/IBSwapV2Router01.sol';
+import './interfaces/IDynamicMigrator.sol';
+import './interfaces/V1/IDynamicV1Factory.sol';
+import './interfaces/V1/IDynamicV1Exchange.sol';
+import './interfaces/IDynamicRouter01.sol';
 import './interfaces/IERC20.sol';
 
-contract BSwapV2Migrator is IBSwapV2Migrator {
-    IBSwapV1Factory immutable factoryV1;
-    IBSwapV2Router01 immutable router;
+contract DynamicMigrator is IDynamicMigrator {
+    IDynamicV1Factory immutable factoryV1;
+    IDynamicRouter01 immutable router;
 
     constructor(address _factoryV1, address _router) public {
-        factoryV1 = IBSwapV1Factory(_factoryV1);
-        router = IBSwapV2Router01(_router);
+        factoryV1 = IDynamicV1Factory(_factoryV1);
+        router = IDynamicRouter01(_router);
     }
 
     // needs to accept ETH from any v1 exchange and the router. ideally this could be enforced, as in the router,
@@ -24,7 +24,7 @@ contract BSwapV2Migrator is IBSwapV2Migrator {
         external
         override
     {
-        IBSwapV1Exchange exchangeV1 = IBSwapV1Exchange(factoryV1.getExchange(token));
+        IDynamicV1Exchange exchangeV1 = IDynamicV1Exchange(factoryV1.getExchange(token));
         uint liquidityV1 = exchangeV1.balanceOf(msg.sender);
         require(exchangeV1.transferFrom(msg.sender, address(this), liquidityV1), 'TRANSFER_FROM_FAILED');
         (uint amountETHV1, uint amountTokenV1) = exchangeV1.removeLiquidity(liquidityV1, 1, 1, uint(-1));

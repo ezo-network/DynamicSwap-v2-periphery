@@ -13,7 +13,7 @@ const overrides = {
   gasLimit: 9999999
 }
 
-describe('BSwapV2Migrator', () => {
+describe('DynamicMigrator', () => {
   const provider = new MockProvider({
     hardfork: 'istanbul',
     mnemonic: 'horn horn horn horn horn horn horn horn horn horn horn horn',

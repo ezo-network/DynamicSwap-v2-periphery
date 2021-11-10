@@ -1,22 +1,22 @@
 {
-  "name": "@bswap/v2-periphery",
+  "name": "@dynamic/v2-periphery",
   "version": "1.1.0-beta.0",
-  "description": "🎚 Peripheral smart contracts for interacting with BSwap V2",
+  "description": "🎚 Peripheral smart contracts for interacting with Dynamic V2",
   "engines": {
     "node": ">=10"
   },
-  "homepage": "https://bswap.org",
+  "homepage": "https://dynamic.org",
   "repository": {
     "type": "git",
-    "url": "https://github.com/BSwap/bswap-v2-periphery"
+    "url": "https://github.com/Dynamic/dynamic-v2-periphery"
   },
   "files": [
     "build",
     "contracts"
   ],
   "dependencies": {
-    "@bswap/lib": "4.0.1-alpha",
-    "@bswap/v2-core": "1.0.0"
+    "@dynamic/lib": "4.0.1-alpha",
+    "@dynamic/v2-core": "1.0.0"
   },
   "devDependencies": {
     "@types/chai": "^4.2.6",

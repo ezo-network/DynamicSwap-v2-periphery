@@ -1,8 +1,8 @@
 pragma solidity >=0.6.2;
 
-import './IBSwapV2Router01.sol';
+import './IDynamicRouter01.sol';
 
-interface IBSwapV2Router02 is IBSwapV2Router01 {
+interface IDynamicRouter02 is IDynamicRouter01 {
     function removeLiquidityETHSupportingFeeOnTransferTokens(
         address token,
         uint liquidity,
