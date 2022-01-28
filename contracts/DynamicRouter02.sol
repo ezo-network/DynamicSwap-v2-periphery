@@ -13,6 +13,7 @@ contract DynamicRouter02 is IDynamicRouter02 {
 
     address public immutable override factory;
     address public immutable override WETH;
+    address public DMC_token;
 
     modifier ensure(uint deadline) {
         require(deadline >= block.timestamp, 'DynamicRouter: EXPIRED');
@@ -22,6 +23,7 @@ contract DynamicRouter02 is IDynamicRouter02 {
     constructor(address _factory, address _WETH) public {
         factory = _factory;
         WETH = _WETH;
+        DMC_token = IDynamicFactory(_factory).dynamic();
     }
 
     receive() external payable {
@@ -133,6 +135,7 @@ contract DynamicRouter02 is IDynamicRouter02 {
             address(this),
             deadline
         );
+        TransferHelper.safeTransfer(DMC_token, to, IERC20(DMC_token).balanceOf(address(this)));
         TransferHelper.safeTransfer(token, to, amountToken);
         IWETH(WETH).withdraw(amountETH);
         TransferHelper.safeTransferETH(to, amountETH);
@@ -185,6 +188,7 @@ contract DynamicRouter02 is IDynamicRouter02 {
             address(this),
             deadline
         );
+        TransferHelper.safeTransfer(DMC_token, to, IERC20(DMC_token).balanceOf(address(this)));
         TransferHelper.safeTransfer(token, to, IERC20(token).balanceOf(address(this)));
         IWETH(WETH).withdraw(amountETH);
         TransferHelper.safeTransferETH(to, amountETH);

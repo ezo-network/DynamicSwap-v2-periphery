@@ -1,0 +1,54 @@
+{
+	"compiler": {
+		"version": "0.6.6+commit.6c089d02"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"methods": {}
+		},
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"bSwap-v2-periphery/contracts/libraries/DynamicLibrary.sol": "DynamicLibrary"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"bSwap-v2-periphery/contracts/interfaces/IDynamicPair.sol": {
+			"keccak256": "0x40ffb171114499b6766e52606e856edba65923d5d2dac4213855cf6cc210fa93",
+			"urls": [
+				"bzz-raw://9b5dab77aa5f1cad983138ed57b9110963fb41aea5acafd264d1c8dfc182da31",
+				"dweb:/ipfs/QmXrzZiDBCHHqqM8nYEbMxyGQ8NJMB9RdBSEgjtGFjNuqK"
+			]
+		},
+		"bSwap-v2-periphery/contracts/libraries/DynamicLibrary.sol": {
+			"keccak256": "0xf5f4883d78a60b05e27601fd23c6aaf3de8bff5bfc7c0a8bad19f9c7bc58555a",
+			"urls": [
+				"bzz-raw://0129c494658c59ed11500944a5cda99a0ec8e2146c7c724041820bd682b06a85",
+				"dweb:/ipfs/QmZSySF8KAgz2Fyg6Ym8F5852D9PVeYp5LNr64y7y6vbkN"
+			]
+		},
+		"bSwap-v2-periphery/contracts/libraries/SafeMath.sol": {
+			"keccak256": "0x977f38b601109ee7a0c1b70a32e08b7aecf5b4672bdea39fa6b7fec810943b80",
+			"urls": [
+				"bzz-raw://50296b94e299cd690f4a7966a93ac6ac58128080b0a14fdb1c2e07d71b50930c",
+				"dweb:/ipfs/QmSCqtcNbmcXUekQk2NYGDQcWt34sASe6ru1v2FLBX9coc"
+			]
+		}
+	},
+	"version": 1
+}
